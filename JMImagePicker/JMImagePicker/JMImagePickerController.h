@@ -14,6 +14,14 @@ typedef NS_ENUM(NSInteger,JMImagerPickerMediaType){
     JMImagerPickerMediaTypeVideo//视频选择
 };
 
+@class JMImageModel;
+
+@protocol JMImagePickerDelegate <NSObject>
+
+- (void)JMImagePickerDidFinishWithImages:(NSArray<JMImageModel *> *)images;
+
+@end
+
 
 @interface JMImagePickerController : UIViewController
 
@@ -25,6 +33,9 @@ typedef NS_ENUM(NSInteger,JMImagerPickerMediaType){
 @property(nonatomic,strong) UIColor *selectedButtonColor;//选择按钮的颜色 默认天蓝色
 @property(nonatomic,strong) NSString *titleText;//标题文本
 @property(nonatomic,assign) JMImagerPickerMediaType mediaType;//类型 默认选择图片
+
+
+@property(nonatomic,assign) id<JMImagePickerDelegate> delegate;
 
 
 

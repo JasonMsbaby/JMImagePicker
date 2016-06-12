@@ -61,7 +61,7 @@
     }];
     titleLabel.text = self.titleText;
 }
-
+//初始化后退按钮
 - (void)initLeftButton{
     UIButton *leftButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [self.topView addSubview:leftButton];
@@ -73,16 +73,7 @@
     [leftButton setTintColor:self.topViewTintColor];
     [leftButton addTarget:self action:@selector(leftButtonClicked) forControlEvents:(UIControlEventTouchUpInside)];
 }
-
-- (void)leftButtonClicked{
-    if (self.navigationController) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }else{
-        [self dismissViewControllerAnimated:YES
-                                 completion:nil];
-    }
-}
-
+//初始化完成按钮
 - (void)initRightButton{
     self.rightButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     [self.topView addSubview:self.rightButton];
@@ -92,6 +83,7 @@
     }];
     [self.rightButton setTitle:@"完成(0)" forState:(UIControlStateNormal)];
     [self.rightButton setTintColor:self.topViewTintColor];
+    [self.rightButton addTarget:self action:@selector(finishClicked) forControlEvents:(UIControlEventTouchUpInside)];
 }
 
 //初始化collectionView
@@ -119,6 +111,24 @@
         model.asset = asset;
         [self.dataSources addObject:model];
     }
+}
+
+#pragma mark - Action
+//后退事件操作
+- (void)leftButtonClicked{
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self dismissViewControllerAnimated:YES
+                                 completion:nil];
+    }
+}
+//选择完成
+- (void)finishClicked{
+    if (self.delegate != nil) {
+        [self.delegate JMImagePickerDidFinishWithImages:[self imagesOfSelected]];
+    }
+    [self leftButtonClicked];
 }
 
 #pragma mark - collectionView DataSources
@@ -165,6 +175,16 @@
         }
     }
     return num;
+}
+//获取所有选择的图片的具体信息
+- (NSArray<JMImageModel *>*)imagesOfSelected{
+    NSMutableArray *arr = [NSMutableArray array];
+    for (JMImageModel *m in self.dataSources) {
+        if (m.isSelected) {
+            [arr addObject:m];
+        }
+    }
+    return arr;
 }
 
 
