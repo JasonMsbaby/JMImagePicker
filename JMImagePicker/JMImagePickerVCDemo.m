@@ -8,7 +8,7 @@
 #import "JMImagePicker.h"
 #import "JMImagePickerVCDemo.h"
 
-@interface JMImagePickerVCDemo ()
+@interface JMImagePickerVCDemo ()<JMImagePickerDelegate>
 @property(nonatomic,strong) UIImageView *image;
 @property(nonatomic,strong) UIButton *selectImageButton;
 
@@ -40,7 +40,16 @@
     JMImagePickerController *pickerVC = [JMImagePickerController new];
     pickerVC.selectedNumber = 2;
 //    pickerVC.selectedButtonColor = [UIColor grayColor];
+    pickerVC.delegate = self;
     [self presentViewController:pickerVC animated:YES completion:nil];
 }
+
+
+- (void)JMImagePickerDidFinishWithImages:(NSArray<JMImageModel *> *)images{
+    [[PHImageManager defaultManager] requestImageForAsset:images[0].asset targetSize:CGSizeMake(200, 200) contentMode:(PHImageContentModeAspectFill) options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        self.image.image = result;
+    }];
+}
+
 
 @end

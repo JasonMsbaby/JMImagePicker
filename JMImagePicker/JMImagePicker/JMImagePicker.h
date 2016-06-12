@@ -11,5 +11,6 @@
 
 #import "JMImagePickerController.h"
 #import "JMImagePickerTools.h"
+#import <Photos/Photos.h>
 
 #endif /* JMImagePicker_h */

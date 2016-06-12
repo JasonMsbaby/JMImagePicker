@@ -52,7 +52,7 @@
 }
 //设置图片
 - (void)settingImage{
-    [[PHImageManager defaultManager] requestImageForAsset:self.model.asset targetSize:self.bounds.size contentMode:(PHImageContentModeAspectFill) options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    [[PHImageManager defaultManager] requestImageForAsset:self.model.asset targetSize:self.bounds.size contentMode:(PHImageContentModeDefault) options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         self.image.image = result;
     }];
     [self selectImageSelected:self.model.isSelected];
